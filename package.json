@@ -1,0 +1,23 @@
+{
+  "name": "live_book",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/douxingxiang/live_book.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/douxingxiang/live_book/issues"
+  },
+  "homepage": "https://github.com/douxingxiang/live_book#readme",
+  "devDependencies": {
+    "gitbook": "^3.2.3",
+    "gitbook-cli": "^2.3.2"
+  }
+}
