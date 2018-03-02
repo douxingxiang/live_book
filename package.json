@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/douxingxiang/live_book#readme",
   "devDependencies": {
+    "babel-loader": "^7.1.3",
+    "babel-preset-env": "^1.6.1",
     "gitbook": "^3.2.3",
     "gitbook-cli": "^2.3.2",
     "webpack": "^4.0.1",

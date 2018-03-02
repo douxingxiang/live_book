@@ -1,11 +1,11 @@
 const path = require('path');
 const webpack = require('webpack');
-
+const root_dir = "./";
 module.exports = {
 	entry: "./src/index.js",
 
 	output: {
-		path: path.resolve(__dirname, "dist"),
+		path: path.resolve(root_dir, "dist"),
 		filename: "index.js"
 	},
 	
@@ -14,12 +14,12 @@ module.exports = {
 			{
 				test: /\.js$/,
 				include: [
-					path.resolve(__dirname, "src")
+					path.resolve(root_dir, "src")
 				],
 				loader: "babel-loader",
 
 				options: {
-					preset: ["env"]
+					presets: ["env"]
 				}
 			}
 		]
