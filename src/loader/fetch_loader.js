@@ -1,16 +1,13 @@
-import EventEmitter from "events";
+import StreamLoader from "./StreamLoader";
 
-class FetchLoader extends EventEmitter {
-	static RESPONSE_OK = "response_ok";
-	static RESPONSE_NOTOK = "response_not_ok";
-	static RESPONSE_ERROR = "response_error";
-	static READ_DONE = "read_on";
-	static READ_CHUNK = "read_not_ok";
-	static READ_ERROR = "read_error";
+class FetchLoader extends StreamLoader {
 
 	constructor() {
-		//@todo默认参数 
 		this._defaultParams = {
+            method: "GET",
+            headers: new self.Headers(),
+            mode: "cors",
+            cache: "default"
 		};
 		//是否停止拉取
 		this._stopFetch = false;
@@ -20,15 +17,16 @@ class FetchLoader extends EventEmitter {
 
 	load(url, params) {
 		let p = params || this._defaultParams;
-		self.fetch(url, params).then( (response) => {
+
+		self.fetch(url, p).then( (response) => {
 			if(response.ok) {
-				this.emit(FetchLoader.RESPONSE_OK, response);
+				this.emit(StreamLoader.RESPONSE_OK, response);
 				this.pump(response.body.getReader());
 			} else {
-				this.emit(FetchLoader.RESPONSE_NOTOK, response);
+				this.emit(StreamLoader.RESPONSE_NOTOK, response);
 			}
 		}).catch( (error) => {
-			this.emit(FetchLoader.RESPONSE_ERROR, error);
+			this.emit(StreamLoader.RESPONSE_ERROR, error);
 		});
 	}
 
@@ -45,13 +43,13 @@ class FetchLoader extends EventEmitter {
 			}
 
 			if(chunk.done) {
-				this.emit(FetchLoader.READ_DONE, chunk);
+				this.emit(StreamLoader.READ_DONE, chunk);
 				this.pump(reader);
 			} else {
-				this.emit(FetchLoader.READ_CHUNK, chunk);
+				this.emit(StreamLoader.READ_CHUNK, chunk);
 			}
 		}).catch( (error) => {
-			this.emit(FetchLoader.READ_ERROR, error);
+			this.emit(StreamLoader.READ_ERROR, error);
 		});
 	}
 
@@ -59,7 +57,7 @@ class FetchLoader extends EventEmitter {
 	 * 是否可以fetch加载、reader读取
 	 */
 	static isSupport() {
-		return FetchLoader.isSupportFetch() && FetchLoader.isSupportStream(); 
+		return StreamLoader.isSupportFetch() && StreamLoader.isSupportStream(); 
 	}
 
 	/**
